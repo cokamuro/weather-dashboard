@@ -24,9 +24,9 @@ function populateWeather(city) {
             return response.json();
         })
         .then(function (data) {
-            console.log(data)
             if (data.length > 0) {
-                getWeatherByGCS(data[0].lat,data[0].lon)
+                var item=data[0]
+                getWeatherByGCS(item.name, item.lat, item.lon);
             } else {
                 //no cities returned
                 //hide display?
@@ -34,35 +34,35 @@ function populateWeather(city) {
         });
 }
 
-function getWeatherByGCS(lattitude, longitude) {
+function getWeatherByGCS(city, lattitude, longitude) {
     //current weather
     //https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
-    
-    var params = "lat="+lattitude+"&lon="+longitude+"&exclude=minutely,hourly,alerts&appid="+openWeathermapKey
+
+    var params = "lat=" + lattitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&units=imperial&appid=" + openWeathermapKey
     fetch("https://api.openweathermap.org/data/2.5/onecall?" + params)
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
-            console.log(data)
-            if (data.length > 0) {
-
-            } else {
-                //no weather returned
-            }
-        });
+            console.log(data, data.length);
+            var current = data.current;
+            var forecast = data.daily;
+            fillTodaysWeather(city, current.temp, current.wind_speed, current.humidity, current.uvi, current.weather[0].main);
+        })
 }
 
-function fillTodaysWeather(city,temperature,wind,humidity,uvindex,description){
-    $("#selected-city").val(city);
-    $("#current-date").val("1/1/1980");
-    $("#current-temp").val(temperature);
-    $("#current-wind").val(wind);
-    $("#current-humidty").val(humidity);
-    $("#current-uv-index").val(uvindex);
+function fillTodaysWeather(city, temperature, wind, humidity, uvindex, description) {
+    $("#selected-city").text(city);
+    $("#current-date").text("1/1/1980");
+    $("#current-temp").text(temperature);
+    $("#current-wind").text(wind);
+    $("#current-humidity").text(humidity);
+    $("#current-uv-index").text(uvindex);
 }
-function fillForecastWeather(index,temperature,wind,humidty,description){
+function fillForecastWeather(index, temperature, wind, humidty, description) {
 
 }
-
+function tempKtoF(temp) {
+    return ((((temp - 273) * (9 / 5)) + 32).toPrecision(4));
+}
 populateWeather("Statesville");
