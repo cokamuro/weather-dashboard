@@ -28,8 +28,7 @@ function populateWeather(city) {
                 var item=data[0]
                 getWeatherByGCS(item.name, item.lat, item.lon);
             } else {
-                //no cities returned
-                //hide display?
+                alert("No matching city was found!");
             }
         });
 }
