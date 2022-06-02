@@ -85,7 +85,7 @@ function fillForecastWeather(index, temperature, wind, humidity, description, ic
     fDate.setDate(fDate.getDate() + index + 1);
     $("#fcast-date-" + index).text(moment(fDate).format("ddd M/D"));
     //get image from openweathermap.org
-    $("#fcast-icon-" + index).attr("src", "http://openweathermap.org/img/wn/" + icon + "@2x.png")
+    $("#fcast-icon-" + index).attr("src", "http://openweathermap.org/img/wn/" + icon + ".png")
     //adding the text description of the forecast to the alt tag of the image
     $("#fcast-icon-" + index).attr("alt", description)
 }
