@@ -13,9 +13,9 @@
     <div class="jumbotron jumbotron-fluid p-3 text-center bg-dark">
         <h1 class="display-4 text-warning">Weather Dashboard</h1>
     </div>
-    <div class="container-fluid m-5 p-3">
+    <div class="container m-5 p-3">
         <div class="row">
-            <section id="city-selection" class="col-12 col-md-2 p-1 rounded bg-dark text-light d-flex flex-column align-items-center">
+            <section id="city-selection" class="col-12 col-md-3 p-1 rounded bg-dark text-light d-flex flex-column align-items-center">
                 <p class="display-7">Search for a City</p>
                 <input id="city" type="text" class="form-control mb-2 w-75"></input>
                 <button id="search" class="btn btn-info text-dark w-75 m-1">Search</button>
@@ -23,13 +23,13 @@
                 <div id="quick-buttons" class="container d-flex flex-column align-items-center">
                 </div>
             </section>
-            <div class="col-12 col-md-9 p-5 m-4 rounded bg-light text-dark">
+            <div class="col-12 col-md-9 rounded rounded text-dark">
                 <section id="current-weather" class="col-12 mb-5">
-                    <h2><span id="selected-city" class="h1 text-dark"></span> (<span id="current-date"></span>)<img src=""></h2>
+                    <h2><span id="selected-city" class="h1 text-dark"></span> (<span id="current-date"></span>)<img id="current-icon" src=""></h2>
                     <p class="h4">Temp: <span id="current-temp"></span>°F</p>
                     <p class="h4">Wind: <span id="current-wind"></span>mph</p>
                     <p class="h4">Humidity: <span id="current-humidity"></span>%</p>
-                    <p class="h4">UV Index: <span id="current-uv-index"></span></p>
+                    <p class="h4">UV Index: <span id="current-uv-index" class="!important"></span></p>
                 </section>
                 <section class="row">
                     <p class="h1">5-Day Forecast</p>
@@ -37,40 +37,35 @@
                 <section id="forecast-weather" class="row">
                     <div id="card-0" class="col-12 col-md-2 m-1 rounded bg-info text-light">
                         <h4 id="fcast-date-0" class="text-dark"></h4>
-                        <img src="">
-                        <p id="fcast-desc-0" class="h6 text-warning"></p>
+                        <img id="fcast-icon-0" src="">
                         <p class="h6">Temp: <span id="fcast-temp-0"></span>°F</p>
                         <p class="h6">Wind: <span id="fcast-wind-0"></span>mph</p>
                         <p class="h6">Humidity: <span id="fcast-humidity-0"></span>%</p>
                     </div>
                     <div id="card-1" class="col-12 col-md-2 m-1 rounded bg-info text-light">
                         <h4 id="fcast-date-1" class="text-dark"></h4>
-                        <img src="">
-                        <p id="fcast-desc-1" class="h6 text-warning"></p>
+                        <img id="fcast-icon-1" src="">
                         <p class="h6">Temp: <span id="fcast-temp-1"></span>°F</p>
                         <p class="h6">Wind: <span id="fcast-wind-1"></span>mph</p>
                         <p class="h6">Humidity: <span id="fcast-humidity-1"></span>%</p>
                     </div>
                     <div id="card-2" class="col-12 col-md-2 m-1 rounded bg-info text-light">
                         <h4 id="fcast-date-2" class="text-dark"></h4>
-                        <img src="">
-                        <p id="fcast-desc-2" class="h6 text-warning"></p>
+                        <img id="fcast-icon-2" src="">
                         <p class="h6">Temp: <span id="fcast-temp-2"></span>°F</p>
                         <p class="h6">Wind: <span id="fcast-wind-2"></span>mph</p>
                         <p class="h6">Humidity: <span id="fcast-humidity-2"></span>%</p>
                     </div>
                     <div id="card-3" class="col-12 col-md-2 m-1 rounded bg-info text-light">
                         <h4 id="fcast-date-3" class="text-dark"></h4>
-                        <img src="">
-                        <p id="fcast-desc-3" class="h6 text-warning"></p>
+                        <img id="fcast-icon-3" src="">
                         <p class="h6">Temp: <span id="fcast-temp-3"></span>°F</p>
                         <p class="h6">Wind: <span id="fcast-wind-3"></span>mph</p>
                         <p class="h6">Humidity: <span id="fcast-humidity-3"></span>%</p>
                     </div>
                     <div id="card-4" class="col-12 col-md-2 m-1 rounded bg-info text-light">
                         <h4 id="fcast-date-4" class="text-dark"></h4>
-                        <img src="">
-                        <p id="fcast-desc-4" class="h6 text-warning"></p>
+                        <img id="fcast-icon-4" src="">
                         <p class="h6">Temp: <span id="fcast-temp-4"></span>°F</p>
                         <p class="h6">Wind: <span id="fcast-wind-4"></span>mph</p>
                         <p class="h6">Humidity: <span id="fcast-humidity-4"></span>%</p>

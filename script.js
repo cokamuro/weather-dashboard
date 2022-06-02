@@ -44,11 +44,12 @@ function getWeatherByGCS(city, lattitude, longitude) {
         })
         .then(function (data) {
             var current = data.current;
-            fillTodaysWeather(city, current.temp, current.wind_speed, current.humidity, current.uvi, current.weather[0].main);
+            console.log(current)
+            fillTodaysWeather(city, current.temp, current.wind_speed, current.humidity, current.uvi, current.weather[0].main,current.weather[0].icon);
             for(i=0;i<5;i++){
                 var forecast = data.daily[i];
                 //console.log(forecast)
-                fillForecastWeather(i,forecast.temp.max, forecast.wind_speed, forecast.humidity, forecast.weather[0].main)
+                fillForecastWeather(i,forecast.temp.max, forecast.wind_speed, forecast.humidity, forecast.weather[0].main,forecast.weather[0].icon)
             }
             var cities=localStorage.getItem("weather-dash-cities");
             if(!cities.includes(city)){localStorage.setItem("weather-dash-cities",cities+","+city);}
@@ -57,7 +58,7 @@ function getWeatherByGCS(city, lattitude, longitude) {
         })
 }
 
-function fillTodaysWeather(city, temperature, wind, humidity, uvindex, description) {
+function fillTodaysWeather(city, temperature, wind, humidity, uvindex, description,icon) {
     $("#selected-city").text(city);
     $("#current-temp").text(temperature);
     $("#current-wind").text(wind);
@@ -67,8 +68,10 @@ function fillTodaysWeather(city, temperature, wind, humidity, uvindex, descripti
     var fDate = new Date;
     fDate.setDate(fDate.getDate());
     $("#current-date").text(moment(fDate).format("ddd M/D"));
+    $("#current-icon").attr("src","http://openweathermap.org/img/wn/"+icon+"@4x.png")
+    $("#current-icon").attr("alt",description)
 }
-function fillForecastWeather(index, temperature, wind, humidity, description) {
+function fillForecastWeather(index, temperature, wind, humidity, description, icon) {
     //clear, rain, clouds
     $("#fcast-desc-"+index).text(description);
     $("#fcast-temp-"+index).text(temperature);
@@ -77,6 +80,8 @@ function fillForecastWeather(index, temperature, wind, humidity, description) {
     var fDate = new Date;
     fDate.setDate(fDate.getDate()+index+1);
     $("#fcast-date-"+index).text(moment(fDate).format("ddd M/D"));
+    $("#fcast-icon-"+index).attr("src","http://openweathermap.org/img/wn/"+icon+"@2x.png")
+    $("#fcast-icon-"+index).attr("alt",description)
 }
 
 function populateLocalStorage(){
