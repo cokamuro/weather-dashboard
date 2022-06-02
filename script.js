@@ -1,5 +1,5 @@
 const openWeathermapKey = "26430011a9e304ff62d863402ab09fcc"
-
+var elQuickButtons = $("#quick-buttons")
 
 //lat,long for Austin,Chicago,New York,Orlando,San Francisco,Seattle,Denver,Atlanta
 //Austin: 30.26759° N, -97.74299° E
@@ -44,25 +44,63 @@ function getWeatherByGCS(city, lattitude, longitude) {
             return response.json();
         })
         .then(function (data) {
-            console.log(data, data.length);
             var current = data.current;
-            var forecast = data.daily;
             fillTodaysWeather(city, current.temp, current.wind_speed, current.humidity, current.uvi, current.weather[0].main);
+            for(i=0;i<5;i++){
+                var forecast = data.daily[i];
+                //console.log(forecast)
+                fillForecastWeather(i,forecast.temp.max, forecast.wind_speed, forecast.humidity, forecast.weather[0].main)
+            }
+            var cities=localStorage.getItem("weather-dash-cities");
+            if(!cities.includes(city)){localStorage.setItem("weather-dash-cities",cities+","+city);}
+            $("#city").val("");
+            populateButtons();
         })
 }
 
 function fillTodaysWeather(city, temperature, wind, humidity, uvindex, description) {
     $("#selected-city").text(city);
-    $("#current-date").text("1/1/1980");
     $("#current-temp").text(temperature);
     $("#current-wind").text(wind);
     $("#current-humidity").text(humidity);
     $("#current-uv-index").text(uvindex);
+    var fDate = new Date;
+    fDate.setDate(fDate.getDate());
+    $("#current-date").text(moment(fDate).format("ddd M/D"));
 }
-function fillForecastWeather(index, temperature, wind, humidty, description) {
+function fillForecastWeather(index, temperature, wind, humidity, description) {
+    $("#fcast-temp-"+index).text(temperature);
+    $("#fcast-wind-"+index).text(wind);
+    $("#fcast-humidity-"+index).text(humidity);
+    var fDate = new Date;
+    fDate.setDate(fDate.getDate()+index+1);
+    $("#fcast-date-"+index).text(moment(fDate).format("ddd M/D"));
+}
 
+function populateLocalStorage(){
+    var cities=localStorage.getItem("weather-dash-cities");
+    if(cities==null){localStorage.setItem("weather-dash-cities","Atlanta,Charlotte,Los Angeles")};
 }
-function tempKtoF(temp) {
-    return ((((temp - 273) * (9 / 5)) + 32).toPrecision(4));
+
+function populateButtons(){
+    var cities=localStorage.getItem("weather-dash-cities");
+    cities=cities.split(",");
+    elQuickButtons.html("");
+    for(i=0;i<cities.length;i++){
+        elQuickButtons.append('<button class="btn qb btn-warning text-dark w-100 m-1">'+cities[i]+'</button>');    
+    }
+    
 }
-populateWeather("Statesville");
+
+$("#search").on("click", function() {
+    populateWeather($("#city").val());
+})
+elQuickButtons.on("click", function(event) {
+    alert($(event.target).text());
+    populateWeather($(event.target).text());
+})
+
+
+populateLocalStorage();
+populateButtons();
+populateWeather("Charlotte");
