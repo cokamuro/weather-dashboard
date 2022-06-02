@@ -64,6 +64,7 @@ function fillTodaysWeather(city, temperature, wind, humidity, uvindex, descripti
     $("#current-wind").text(wind);
     $("#current-humidity").text(humidity);
     $("#current-uv-index").text(uvindex);
+    $("#current-uv-index").attr("color","red")
     var fDate = new Date;
     fDate.setDate(fDate.getDate());
     $("#current-date").text(moment(fDate).format("ddd M/D"));
@@ -95,8 +96,8 @@ function populateButtons(){
 $("#search").on("click", function() {
     populateWeather($("#city").val());
 })
+
 elQuickButtons.on("click", function(event) {
-    alert($(event.target).text());
     populateWeather($(event.target).text());
 })
 
