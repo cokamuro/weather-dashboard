@@ -1,18 +1,6 @@
 const openWeathermapKey = "26430011a9e304ff62d863402ab09fcc"
 var elQuickButtons = $("#quick-buttons")
 
-//lat,long for Austin,Chicago,New York,Orlando,San Francisco,Seattle,Denver,Atlanta
-//Austin: 30.26759° N, -97.74299° E
-//Chicago: 41.88425° N, -87.63245° E
-//New York: 40.7648, -73.9808
-//Orlando: 28.5421, -81.379
-//San Francisco: 37.77986° N, -122.42905° E
-//Seattle: 47.60357° N, -122.32945° E
-//Denver: 39.73715° N, -104.989174° E
-//Atlanta: 33.74831° N, -84.39111° E
-
-
-
 function populateWeather(city) {
     //lookup data based on city name
     //https://openweathermap.org/api/geocoding-api
@@ -48,7 +36,6 @@ function getWeatherByGCS(city, lattitude, longitude) {
             fillTodaysWeather(city, current.temp, current.wind_speed, current.humidity, current.uvi, current.weather[0].main,current.weather[0].icon);
             for(i=0;i<5;i++){
                 var forecast = data.daily[i];
-                //console.log(forecast)
                 fillForecastWeather(i,forecast.temp.max, forecast.wind_speed, forecast.humidity, forecast.weather[0].main,forecast.weather[0].icon)
             }
             var cities=localStorage.getItem("weather-dash-cities");
@@ -64,7 +51,11 @@ function fillTodaysWeather(city, temperature, wind, humidity, uvindex, descripti
     $("#current-wind").text(wind);
     $("#current-humidity").text(humidity);
     $("#current-uv-index").text(uvindex);
-    $("#current-uv-index").attr("color","red")
+    var uvIndexClass="btn-success" //green
+    if(uvindex>=3){uvIndexClass="btn-warning"} //yellow
+    if(uvindex>=8){uvIndexClass="btn-danger"}  //red
+    $("#current-uv-index").attr("class","btn active "+uvIndexClass)
+    
     var fDate = new Date;
     fDate.setDate(fDate.getDate());
     $("#current-date").text(moment(fDate).format("ddd M/D"));
@@ -106,7 +97,6 @@ $("#search").on("click", function() {
 elQuickButtons.on("click", function(event) {
     populateWeather($(event.target).text());
 })
-
 
 populateLocalStorage();
 populateButtons();
