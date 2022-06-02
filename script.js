@@ -13,7 +13,49 @@ var elQuickButtons = $("#quick-buttons")
 
 
 
+function populateWeather(city) {
+    //lookup data based on city name
+    //https://openweathermap.org/api/geocoding-api
 
+    //get lat, long off of response, test for bad response
+    var params = "q=" + city + "&limit=1&appid=" + openWeathermapKey
+    fetch("https://api.openweathermap.org/geo/1.0/direct?" + params)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            if (data.length > 0) {
+                var item=data[0]
+                getWeatherByGCS(item.name, item.lat, item.lon);
+            } else {
+                alert("No matching city was found!");
+            }
+        });
+}
+
+function getWeatherByGCS(city, lattitude, longitude) {
+    //current weather
+    //https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
+
+    var params = "lat=" + lattitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&units=imperial&appid=" + openWeathermapKey
+    fetch("https://api.openweathermap.org/data/2.5/onecall?" + params)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            var current = data.current;
+            fillTodaysWeather(city, current.temp, current.wind_speed, current.humidity, current.uvi, current.weather[0].main);
+            for(i=0;i<5;i++){
+                var forecast = data.daily[i];
+                //console.log(forecast)
+                fillForecastWeather(i,forecast.temp.max, forecast.wind_speed, forecast.humidity, forecast.weather[0].main)
+            }
+            var cities=localStorage.getItem("weather-dash-cities");
+            if(!cities.includes(city)){localStorage.setItem("weather-dash-cities",cities+","+city);}
+            $("#city").val("");
+            populateButtons();
+        })
+}
 
 function fillTodaysWeather(city, temperature, wind, humidity, uvindex, description) {
     $("#selected-city").text(city);
