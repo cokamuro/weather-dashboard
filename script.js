@@ -19,7 +19,7 @@ function populateWeather(city) {
 
     //get lat, long off of response, test for bad response
     var params = "q=" + city + "&limit=1&appid=" + openWeathermapKey
-    fetch("http://api.openweathermap.org/geo/1.0/direct?" + params)
+    fetch("https://api.openweathermap.org/geo/1.0/direct?" + params)
         .then(function (response) {
             return response.json();
         })
