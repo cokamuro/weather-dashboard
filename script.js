@@ -98,23 +98,29 @@ function populateLocalStorage() {
 }
 
 function populateButtons() {
+    //retreive the saved cities
     var cities = localStorage.getItem("weather-dash-cities");
+    //convert the delimited string to an array
     cities = cities.split(",");
     elQuickButtons.html("");
+    //create the buttons
     for (i = 0; i < cities.length; i++) {
         elQuickButtons.append('<button class="btn qb btn-warning text-dark w-100 m-1">' + cities[i] + '</button>');
     }
 
 }
 
+//add event handler for city search button
 $("#search").on("click", function () {
     populateWeather($("#city").val());
 })
 
+//add the event handler on the city buttons div for proper click delegation on dynamically-created buttons
 elQuickButtons.on("click", function (event) {
     populateWeather($(event.target).text());
 })
 
+//start page processing
 populateLocalStorage();
 populateButtons();
 populateWeather("Charlotte");
