@@ -69,6 +69,8 @@ function fillTodaysWeather(city, temperature, wind, humidity, uvindex, descripti
     $("#current-date").text(moment(fDate).format("ddd M/D"));
 }
 function fillForecastWeather(index, temperature, wind, humidity, description) {
+    //clear, rain, clouds
+    $("#fcast-desc-"+index).text(description);
     $("#fcast-temp-"+index).text(temperature);
     $("#fcast-wind-"+index).text(wind);
     $("#fcast-humidity-"+index).text(humidity);
